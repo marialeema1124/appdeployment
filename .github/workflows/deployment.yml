@@ -82,7 +82,7 @@ jobs:
     - name: Restart deployments
       run: |-
         kubectl rollout restart deploy       
-        kubectl rollout status deployment customer-prod-deployment  
+        kubectl rollout status deployment customer-deployment  
       
     # deploy gateway and virtual services
     - name: Direct traffic application
