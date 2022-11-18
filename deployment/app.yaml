@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-deployment
+  labels:
+    app: customer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer   
+  template:
+    metadata:
+      labels: # labels to select/identify the deployment
+        app: customer       
+    spec:     # pod spec
+      imagePullSecrets:
+      - name: jfrog-secret
+      containers: 
+      - name: customer
+        image: sreyo.jfrog.io/ml-test-app-local/mlappimage-docker
+        #imagePullPolicy: Never
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-service
+  labels:
+    app: customer
+spec:
+  selector:
+    app: customer 
+  ports:
+    - port: 3000
+      targetPort: 3000
